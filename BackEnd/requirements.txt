@@ -1,0 +1,15 @@
+Django == 4.2.9
+Wagtail == 5.2.3
+psycopg2-binary
+djangorestframework == 3.14
+django-auditlog
+django-filter == 23.5
+django-cors-headers #4.3.1 latest
+django-threadlocals
+django-storages
+#cloudfare # ———> Revisar (https://www.cloudflare.com/es-es/products/turnstile/)s
+drf-spectacular
+djangorestframework-recaptcha # ——→ investigar análogo para Cloudfare
+whitenoise
+django-session-timeout
+django-defender
