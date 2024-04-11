@@ -24,4 +24,4 @@ class ClaseColor(models.Model):
     ]
 
     def __str__(self):
-        return self.nombr
+        return self.nombre
