@@ -4,6 +4,7 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel
 from .blocks import CarruselHistoriaItem
 
+
 class Base(Page):
     carrusel = StreamField([
         ("carrusel_item", CarruselHistoriaItem())
@@ -15,4 +16,6 @@ class Base(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('body'),
+        FieldPanel('carrusel'),
     ]
+
