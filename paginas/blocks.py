@@ -2,7 +2,7 @@ from wagtail import blocks
 from wagtail.blocks import RichTextBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.snippets import blocks as snippets
-from home.snippets import Icono, ClaseColor
+from paginas.snippets import Icono, ClaseColor
 
 
 class Boton(blocks.StructBlock):
