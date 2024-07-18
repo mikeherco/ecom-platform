@@ -74,7 +74,7 @@ NavBar
     - icono de antDesign!!
 
 
-SubMenu categos
+SubMenu categos -> agregar mostrar submenu en config sitio
     - Categorias snippet independiente
     - configurar mostrar en submenu en api
 
