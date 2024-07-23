@@ -2,13 +2,14 @@ from django.db import models
 from wagtail.api import APIField
 from wagtail.contrib.settings.models import BaseSiteSetting
 from wagtail.contrib.settings.registry import register_setting
-from wagtail.models import Page
+from wagtail.models import Page, AbstractPage
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel
 from paginas.blocks import CarruselHistoriaItem
 from wagtail import blocks as core_blocks
 from wagtail.snippets import blocks as snippets_blocks
 from paginas.snippets import ClaseColor, Icono
+from wagtail.images.blocks import ImageChooserBlock
 """TODO: min_num debe ser mínimo 1 en QA y prod"""
 
 
@@ -52,7 +53,7 @@ class Base(Page):
     carrusel = StreamField([
         ("carrusel_item", CarruselHistoriaItem())
     ], block_counts={
-        'carrusel_historia_item': {'min_num': 1},
+        'carrusel_item': {'min_num': 1},
     }, use_json_field=True)
 
     body = RichTextField(blank=True)
@@ -61,18 +62,53 @@ class Base(Page):
         FieldPanel('body'),
         FieldPanel('carrusel'),
     ]
+    max_count = 1
+
+
+class Categoria(Page):
+    parent_page_types = ['Base']
+    categoria = core_blocks.CharBlock(required=True)
+
+    content_panels = Page.content_panels + []
+    search_fields = Page.search_fields + []
+
+    class Meta:
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
+
+
+class NavBar(Page):
+    parent_page_types = ['Base']
+    desc = StreamField([
+        ('logo', ImageChooserBlock(required=True)),
+        ('color', snippets_blocks.SnippetChooserBlock(ClaseColor, required=True)),
+        ('mostrar_buscador', core_blocks.BooleanBlock(required=True, default=True)),
+        ('buscador_paginas', core_blocks.PageChooserBlock(Categoria, required=False)),
+        ('icono', snippets_blocks.SnippetChooserBlock(Icono, required=False)),
+        ('mostrar_icono', core_blocks.BooleanBlock(required=True, default=True)),
+    ])
+
+    content_panels = Page.content_panels + [
+       FieldPanel('desc'),
+    ]
+
+    promote_panels = Page.content_panels + []
+
+    api_fields = [
+        APIField('desc'),
+    ]
+
+    class Meta:
+        verbose_name = 'NavBar'
+        verbose_name_plural = 'NavBars'
 
 
 """
 NavBar
     - Logo -> imageField
-    - Color asociado al snippet de Clase color
-    - Titulo  (Obligatorio)
     - mostrar_titulo y override cuando hay icono
-    - mostrar-buscador
-    - tipos paginas para la busqueda del buscador (snippet en streamblock)
     - icono de antDesign!!
-
+    - slug
 
 SubMenu categos -> agregar mostrar submenu en config sitio
     - Categorias snippet independiente
@@ -80,6 +116,12 @@ SubMenu categos -> agregar mostrar submenu en config sitio
 
 Carrusel
     - Checar Grupo Carrusel y Carrusel Pagina
+    - Titulo
+    - Descripcion
+    - Imagen
+    - Boton accion
+    - choices Centrado, izquierda, derecha y centro
+    -
 
 Pagina Producto
     - promocionar -> meterle un api por type=paginas.Productos & promocionnar=True
