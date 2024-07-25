@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar class="py-1 bg-indigo-lighten-1" density="compact">
+    <v-toolbar class="pa-1 bg-indigo-lighten-1" density="compact">
 <!--
       <v-toolbar-title>Title</v-toolbar-title>
 -->
