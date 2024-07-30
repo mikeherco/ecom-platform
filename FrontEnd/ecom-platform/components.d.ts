@@ -10,6 +10,7 @@ declare module 'vue' {
     CarruselPrincipal: typeof import('./src/components/CarruselPrincipal.vue')['default']
     Layout: typeof import('./src/components/layout.vue')['default']
     MainFooter: typeof import('./src/components/MainFooter.vue')['default']
+    MenuSecundario: typeof import('./src/components/MenuSecundario.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

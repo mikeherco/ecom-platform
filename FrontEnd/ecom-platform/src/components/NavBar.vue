@@ -15,6 +15,8 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-toolbar>
+  <MenuSecundario />
 </template>
 <script setup lang="ts">
+import MenuSecundario from "@/components/MenuSecundario.vue";
 </script>
