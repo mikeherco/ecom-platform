@@ -13,3 +13,13 @@
   background: aliceblue!important;
   color: #231f20!important;
 }
+
+.contenedor {
+  max-width: 1200px; /* Ancho máximo del contenedor */
+  margin: 0 auto; /* Centrando el contenedor horizontalmente */
+  margin-top: 0!important;
+  margin-bottom: 0!important;
+  padding: 20px 20px; /* Márgenes laterales y superior/inferior */
+  background-color: #f9f9f9; /* Color de fondo del contenedor */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra alrededor del contenedor */
+}

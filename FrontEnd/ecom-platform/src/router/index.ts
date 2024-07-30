@@ -1,12 +1,22 @@
-/**
- * router/index.ts
- *
- * Automatic routes for `./src/pages/*.vue`
- */
-
 // Composables
 import { createRouter, createWebHistory } from 'vue-router/auto'
-import { routes } from 'vue-router/auto-routes'
+import {RouteRecordRaw} from "vue-router";
+import ProductDetail from "@/pages/ProductDetail.vue";
+import Home from "@/pages/Home.vue";
+
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/",
+    name: "Home",
+    component: Home
+  },
+  {
+    path: "/producto/:id",
+    name: "Producto",
+    component: ProductDetail
+  }
+];
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

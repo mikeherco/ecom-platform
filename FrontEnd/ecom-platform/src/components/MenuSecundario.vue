@@ -41,9 +41,6 @@ let menu = [
     </v-list>
   </div>
 </template>
-
-
-
 <style scoped>
 
 </style>
