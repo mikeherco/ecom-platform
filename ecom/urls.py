@@ -14,26 +14,34 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-from django.urls import path, include
-
-from wagtail.admin import urls as wagtailadmin_urls
-from wagtail import urls as wagtail_urls
-from wagtail.documents import urls as wagtaildocs_urls
 from django.conf import settings
-from django.conf.urls.static import static
-from wagtail.api.v2.router import WagtailAPIRouter
+from django.contrib import admin
+
+from django.urls import path, include, re_path
+from rest_framework import routers
+
+from wagtail.admin import urls as wagtail_admin_urls
+from wagtail.admin.views.account import LoginView
+from wagtail.documents import urls as wagtail_docs_urls
+
+from rest.urls import wagtail_router
+from search import views as search_views
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("cms/", include(wagtailadmin_urls)),
-    path("documents/", include(wagtaildocs_urls)),
-    path("pages/", include(wagtail_urls)),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-api_router = WagtailAPIRouter('wagtailapi')
+    path("wadmin/login", LoginView.as_view(), name="wagtail_login"),
+    path("wadmin/", include(wagtail_admin_urls)),
+    path("documents/", include(wagtail_docs_urls)),
+    path("search/", search_views.search, name="search"),
+
+
+    path('rest/auth', include('rest_framework.urls'), name='rest_rest_framework'),
+    path('rest/', include(r'rest.urls'), name='rest_urls'),
+    path("rest/", wagtail_router.urls)
+]
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
 
 
 if settings.DEBUG:
@@ -45,11 +53,11 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = urlpatterns + [
-    # For anything not caught by a more specific rule above, hand over to
-    # Wagtail's page serving mechanism. This should be the last pattern in
-    # the list:
-    path("", include(wagtail_urls)),
-    # Alternatively, if you want Wagtail pages to be served from a subpath
-    # of your site, rather than the site root:
-    #    path("pages/", include(wagtail_urls)),
+    # # For anything not caught by a more specific rule above, hand over to
+    # # Wagtail's page serving mechanism. This should be the last pattern in
+    # # the list:
+    # path("", include(wagtail_urls)),
+    # # Alternatively, if you want Wagtail pages to be served from a subpath
+    # # of your site, rather than the site root:
+    # #    path("pages/", include(wagtail_urls)),
 ]
