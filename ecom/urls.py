@@ -31,15 +31,14 @@ from search import views as search_views
 urlpatterns = [
     path("admin/", admin.site.urls),
 
-    path("wadmin/login", LoginView.as_view(), name="wagtail_login"),
-    path("wadmin/", include(wagtail_admin_urls)),
+    path("cms/login", LoginView.as_view(), name="wagtail_login"),
+    path("cms/", include(wagtail_admin_urls)),
     path("documents/", include(wagtail_docs_urls)),
     path("search/", search_views.search, name="search"),
 
 
     path('rest/auth', include('rest_framework.urls'), name='rest_rest_framework'),
     path('rest/', include(r'rest.urls'), name='rest_urls'),
-    path("rest/", wagtail_router.urls)
 ]
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
 
