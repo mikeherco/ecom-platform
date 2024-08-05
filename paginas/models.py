@@ -83,10 +83,14 @@ class NavBar(Page):
         ('logo', ImageChooserBlock(required=True)),
         ('color', snippets_blocks.SnippetChooserBlock(ClaseColor, required=True)),
         ('mostrar_buscador', core_blocks.BooleanBlock(required=True, default=True)),
-        ('buscador_paginas', core_blocks.PageChooserBlock(Categoria, required=False)),
+        ('buscador_paginas', core_blocks.StreamBlock([
+            ('categorias', core_blocks.PageChooserBlock(Categoria, required=True))
+        ])),
         ('icono', snippets_blocks.SnippetChooserBlock(Icono, required=False)),
         ('mostrar_icono', core_blocks.BooleanBlock(required=True, default=True)),
-    ])
+    ], block_counts={
+        'buscador_paginas': {'max_num': 1},
+    })
 
     content_panels = Page.content_panels + [
        FieldPanel('desc'),
