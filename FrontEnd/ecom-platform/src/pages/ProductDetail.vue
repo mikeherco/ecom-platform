@@ -1,15 +1,30 @@
 <script setup lang="ts">
 import HeroProduct from "@/components/HeroProduct.vue";
+import DescriptionProduct from "@/components/DescriptionProduct.vue";
 
 const productos = [
   {
     id: 1,
-    nombre: 'Camiseta Azul',
+    nombre: 'Camiseta',
     descripcion: 'Una camiseta azul hecha de algodón 100% con un diseño moderno y cómodo.',
-    imagen: 'https://example.com/images/camiseta-azul.jpg',
+    imagen: 'https://contents.mediadecathlon.com/p2571341/k$abada217bebeb85a5602b984f6ed6363/camiseta-de-futbol-manga-corta-essentiel-azul.jpg?format=auto&quality=40&f=452x452',
     precio: 19.99,
-    color: 'Azul',
-    resumen: 'Camiseta azul de algodón 100%.'
+    color: ['Azul', 'Negro'],
+    resumen: 'Camiseta azul de algodón 100%.',
+    especificaciones: [
+    {
+      type: 'texto',
+      descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac elementum mauris. Aliquam et mattis tortor. Integer quam massa, luctus eget massa a, pulvinar dignissim velit. Vivamus semper dolor risus, sed volutpat metus lacinia nec. Aenean ac orci dui. Nunc pulvinar cursus eros. Donec ultricies at enim a accumsan. Donec euismod iaculis suscipit. Aliquam elementum lacinia fermentum. .'
+    },
+    {
+      type: 'imagen',
+      descripcion: 'https://i.pinimg.com/236x/d6/97/65/d697651877c46eef7c64f01ae5542ad5.jpg'
+    },
+    {
+      type: 'texto',
+      descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac elementum mauris. Aliquam et mattis tortor. Integer quam massa, luctus eget massa a, pulvinar dignissim velit. Vivamus semper dolor risus, sed volutpat metus lacinia nec. Aenean ac orci dui. Nunc pulvinar cursus eros. Donec ultricies at enim a accumsan. Donec euismod iaculis suscipit. Aliquam elementum lacinia fermentum. '
+    },
+    ]
   },
   {
     id: 2,
@@ -51,7 +66,8 @@ const productos = [
 </script>
 
 <template>
-<HeroProduct :datos="productos[0]" />
+  <HeroProduct :datos="productos[0]" />
+  <DescriptionProduct :datos="productos[0].especificaciones"/>
 </template>
 
 <style scoped>
