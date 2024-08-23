@@ -10,6 +10,7 @@ from wagtail import blocks as core_blocks
 from wagtail.snippets import blocks as snippets_blocks
 from paginas.snippets import ClaseColor, Icono
 from wagtail.images.blocks import ImageChooserBlock
+from .snippets import Categoria
 """TODO: min_num debe ser mínimo 1 en QA y prod"""
 
 
@@ -50,6 +51,7 @@ class ConfiguracionSitio(BaseSiteSetting):
 
 
 class Base(Page):
+    """Base es HOME"""
     carrusel = StreamField([
         ("carrusel_item", CarruselHistoriaItem())
     ], block_counts={
@@ -65,29 +67,32 @@ class Base(Page):
     max_count = 1
 
 
-class Categoria(Page):
+class Grupo(Page):
     parent_page_types = ['Base']
-    categoria = core_blocks.CharBlock(required=True)
 
-    content_panels = Page.content_panels + []
-    search_fields = Page.search_fields + []
+    subpage_types = ['Navbar']
 
     class Meta:
-        verbose_name = 'Categoria'
-        verbose_name_plural = 'Categorias'
+        verbose_name = 'Pagina Grupo'
+        verbose_name_plural = 'Paginas Grupo'
 
 
 class NavBar(Page):
-    parent_page_types = ['Base']
+    parent_page_types = ['Grupo']
+
+    subpages_type = []
+
     desc = StreamField([
         ('logo', ImageChooserBlock(required=True)),
         ('color', snippets_blocks.SnippetChooserBlock(ClaseColor, required=True)),
-        ('mostrar_buscador', core_blocks.BooleanBlock(required=True, default=True)),
         ('buscador_paginas', core_blocks.StreamBlock([
-            ('categorias', core_blocks.PageChooserBlock(Categoria, required=True))
+            ('mostrar_buscador', core_blocks.BooleanBlock(required=True, default=True)),
+            ('categorias', snippets_blocks.SnippetChooserBlock(Categoria, required=True))
         ])),
-        ('icono', snippets_blocks.SnippetChooserBlock(Icono, required=False)),
-        ('mostrar_icono', core_blocks.BooleanBlock(required=True, default=True)),
+        ('icono', core_blocks.StreamBlock([
+            ('valor', snippets_blocks.SnippetChooserBlock(Icono, required=True)),
+            ('mostrar', core_blocks.BooleanBlock(required=True, default=True)),
+        ])),
     ], block_counts={
         'buscador_paginas': {'max_num': 1},
     })
@@ -96,7 +101,7 @@ class NavBar(Page):
        FieldPanel('desc'),
     ]
 
-    promote_panels = Page.content_panels + []
+    promote_panels = Page.promote_panels + []
 
     api_fields = [
         APIField('desc'),
@@ -107,35 +112,10 @@ class NavBar(Page):
         verbose_name_plural = 'NavBars'
 
 
-"""
-NavBar
-    - Logo -> imageField
-    - mostrar_titulo y override cuando hay icono
-    - icono de antDesign!!
-    - slug
+class Footer(Page):
+    parent_page_types = ['Base']
 
-SubMenu categos -> agregar mostrar submenu en config sitio
-    - Categorias snippet independiente
-    - configurar mostrar en submenu en api
+    class Meta:
+        verbose_name = 'Pie de pagina'
+        verbose_name_plural = 'Pies de pagina'
 
-Carrusel
-    - Checar Grupo Carrusel y Carrusel Pagina
-    - Titulo
-    - Descripcion
-    - Imagen
-    - Boton accion
-    - choices Centrado, izquierda, derecha y centro
-    -
-
-Pagina Producto
-    - promocionar -> meterle un api por type=paginas.Productos & promocionnar=True
-    - Hacer primer saque Miguel
-
-Novedades
-    - checar api por first-published en type=paginas.Productos
-
-Footer
-    - checar Pie de pagina
-    - licencia, redes sociales y contacto con direccion
-
-"""
