@@ -4,13 +4,13 @@ from wagtail.contrib.settings.models import BaseSiteSetting
 from wagtail.contrib.settings.registry import register_setting
 from wagtail.models import Page, AbstractPage
 from wagtail.fields import RichTextField, StreamField
-from wagtail.admin.panels import FieldPanel
-from paginas.blocks import CarruselHistoriaItem
+from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, ObjectList
+from paginas.blocks import CarruselHistoriaItem, FooterStreamBlock
 from wagtail import blocks as core_blocks
 from wagtail.snippets import blocks as snippets_blocks
 from paginas.snippets import ClaseColor, Icono
 from wagtail.images.blocks import ImageChooserBlock
-from .snippets import Categoria
+# from .snippets import Categoria
 """TODO: min_num debe ser mínimo 1 en QA y prod"""
 
 
@@ -39,6 +39,8 @@ class ConfiguracionSitio(BaseSiteSetting):
         'redes_sociales': {'min_num': 0, 'max_num': 4}
     }, null=True, blank=True, use_json_field=True)
 
+    footer = StreamField(FooterStreamBlock())
+
     api_fields = [
         APIField('site_id'),
         APIField('mantenimiento'),
@@ -47,6 +49,7 @@ class ConfiguracionSitio(BaseSiteSetting):
         APIField('paleta_color'),
         APIField('analytics'),
         APIField('redes_sociales'),
+        APIField('footer'),
     ]
 
 
@@ -85,26 +88,31 @@ class NavBar(Page):
     desc = StreamField([
         ('logo', ImageChooserBlock(required=True)),
         ('color', snippets_blocks.SnippetChooserBlock(ClaseColor, required=True)),
-        ('buscador_paginas', core_blocks.StreamBlock([
-            ('mostrar_buscador', core_blocks.BooleanBlock(required=True, default=True)),
-            ('categorias', snippets_blocks.SnippetChooserBlock(Categoria, required=True))
-        ])),
+        # ('buscador_paginas', core_blocks.StreamBlock([
+        #     ('mostrar_buscador', core_blocks.BooleanBlock(required=True, default=True)),
+        #     ('categorias', snippets_blocks.SnippetChooserBlock(Categoria, required=True)),
+        # ])),
         ('icono', core_blocks.StreamBlock([
             ('valor', snippets_blocks.SnippetChooserBlock(Icono, required=True)),
             ('mostrar', core_blocks.BooleanBlock(required=True, default=True)),
         ])),
     ], block_counts={
-        'buscador_paginas': {'max_num': 1},
+        # 'buscador_paginas': {'max_num': 1},
     })
 
     content_panels = Page.content_panels + [
-       FieldPanel('desc'),
+        FieldPanel('desc'),
+        # MultiFieldPanel(
+        #     [
+        #         InlinePanel('navbar_categorias', label='Categoria'),
+        #     ], heading='Categoria(s)'),
     ]
 
     promote_panels = Page.promote_panels + []
 
     api_fields = [
         APIField('desc'),
+        APIField('navbar_categorias'),
     ]
 
     class Meta:
@@ -119,3 +127,32 @@ class Footer(Page):
         verbose_name = 'Pie de pagina'
         verbose_name_plural = 'Pies de pagina'
 
+"""
+NavBar
+    - mostrar_titulo y override cuando hay icono
+
+SubMenu categos -> agregar mostrar submenu en config sitio
+    - Categorias snippet independiente
+    - configurar mostrar en submenu en api
+
+Carrusel
+    - Checar Grupo Carrusel y Carrusel Pagina
+    - Titulo
+    - Descripcion
+    - Imagen
+    - Boton accion
+    - choices Centrado, izquierda, derecha y centro
+
+Pagina Producto
+    - promocionar -> meterle un api por type=paginas.Productos & promocionnar=True
+    - Hacer primer saque Miguel
+
+Novedades
+    - checar api por first-published en type=paginas.Productos
+
+Footer
+    - checar Pie de pagina
+    - licencia, redes sociales y contacto con direccion
+
+Descuentos como paginas con porcentaje de descuento y streamfield de pagechooser
+"""

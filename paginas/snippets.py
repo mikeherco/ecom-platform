@@ -30,13 +30,13 @@ class ClaseColor(models.Model):
         return self.nombre
 
 
-@register_snippet
-class Categoria(RevisionBaseModelMixin):
-    nombre = models.CharField(max_length=120, primary_key=True, unique=True, null=False, blank=False)
-
-    panels = [
-        FieldPanel('nombre'),
-    ]
-
-    def __str__(self):
-        return self.nombre
+# @register_snippet
+# class Categoria(RevisionBaseModelMixin):
+#     nombre = models.CharField(max_length=120, null=False, blank=False)
+#
+#     panels = [
+#         FieldPanel('nombre'),
+#     ]
+#
+#     def __str__(self):
+#         return self.nombre
