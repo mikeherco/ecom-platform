@@ -8,11 +8,10 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.models import Orderable
 from wagtail.snippets import blocks as snippets
 from wagtail.snippets.blocks import SnippetChooserBlock
-
 from paginas.snippets import Icono, ClaseColor
 
 
-class Boton(core_blocks.StructBlock):
+class BotonBlock(core_blocks.StructBlock):
     accion_tipo = core_blocks.ChoiceBlock(required=True, choices=(
         ('', 'Tipo de acción'), ('sin_accion', 'Sin acción'), ('pagina', 'Página'), ('url', 'URL')),
                                           classname='wagtailuiplus__choice-handler '
@@ -35,17 +34,12 @@ class Boton(core_blocks.StructBlock):
                                              choices=(('izquierda', 'Izquierda'), ('derecha', 'Derecha')))
 
 
-class CarruselHistoriaItem(core_blocks.StreamBlock):
-    imagen = ImageChooserBlock(
-        label='Imagen', required=False
-    )
-    titulo = RichTextBlock(required=False,
-                               features=['bold', 'italic', 'superscript', 'subscript', 'strikethrough'])
-    descripcion = RichTextBlock(required=False,
-                                    features=['bold', 'italic', 'superscript', 'subscript', 'strikethrough', 'link'])
-
-    boton = Boton()
-
+class CarruselHistoriaBlock(core_blocks.StreamBlock):
+    imagen = ImageChooserBlock(label='Imagen', required=False)
+    titulo = RichTextBlock(required=False, features=['bold', 'italic', 'superscript', 'subscript', 'strikethrough'])
+    descripcion = RichTextBlock(required=False, features=['bold', 'italic', 'superscript', 'subscript',
+                                                          'strikethrough', 'link'])
+    boton = BotonBlock()
     alineacion_texto = core_blocks.ChoiceBlock(max_length=30, null=True, blank=True, required=False,
                                                choices=(('izquierda', 'Izquierda'),
                                                         ('derecha', 'Derecha')), default='izquierda', )
@@ -89,7 +83,7 @@ class TextoColumnaBlock(core_blocks.StructBlock):
     #
 
 
-class LinkColumnaBlock(core_blocks.StructBlock):
+class LinkBlock(core_blocks.StructBlock):
     enlace = core_blocks.ListBlock(EnlaceBlock(), min_num=1, max_num=5)
 
 
@@ -99,8 +93,16 @@ class TextoRicoBlock(core_blocks.StructBlock):
 
 class FooterStreamBlock(core_blocks.StreamBlock):
     texto_columna = TextoColumnaBlock()
-    link_columna = LinkColumnaBlock()
+    link_columna = LinkBlock()
     licencia = TextoRicoBlock()
+
+    class Meta:
+        block_counts = {
+            'texto_columna': {'min_num': 1, 'max_num': 1},
+            'link_columna': {'min_num': 1, 'max_num': 5},
+            'licencia': {'min_num': 1, 'max_num': 1},
+        }
+
 
 
 # class CategoriasOrderable(Orderable):

@@ -5,7 +5,7 @@ from wagtail.contrib.settings.registry import register_setting
 from wagtail.models import Page, AbstractPage
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, ObjectList
-from paginas.blocks import CarruselHistoriaItem, FooterStreamBlock
+from paginas.blocks import CarruselHistoriaBlock, FooterStreamBlock
 from wagtail import blocks as core_blocks
 from wagtail.snippets import blocks as snippets_blocks
 from paginas.snippets import ClaseColor, Icono
@@ -56,7 +56,7 @@ class ConfiguracionSitio(BaseSiteSetting):
 class Base(Page):
     """Base es HOME"""
     carrusel = StreamField([
-        ("carrusel_item", CarruselHistoriaItem())
+        ("carrusel_item", CarruselHistoriaBlock())
     ], block_counts={
         'carrusel_item': {'min_num': 1},
     }, use_json_field=True)
@@ -149,10 +149,6 @@ Pagina Producto
 
 Novedades
     - checar api por first-published en type=paginas.Productos
-
-Footer
-    - checar Pie de pagina
-    - licencia, redes sociales y contacto con direccion
 
 Descuentos como paginas con porcentaje de descuento y streamfield de pagechooser
 """
