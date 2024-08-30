@@ -5,7 +5,7 @@ from wagtail.contrib.settings.registry import register_setting
 from wagtail.models import Page, AbstractPage
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, ObjectList
-from paginas.blocks import CarruselHistoriaBlock, FooterStreamBlock
+from paginas.blocks import CarruselHistoriaBlock, FooterStreamBlock, IconoBlock
 from wagtail import blocks as core_blocks
 from wagtail.snippets import blocks as snippets_blocks
 from paginas.snippets import ClaseColor, Icono
@@ -92,20 +92,17 @@ class NavBar(Page):
         #     ('mostrar_buscador', core_blocks.BooleanBlock(required=True, default=True)),
         #     ('categorias', snippets_blocks.SnippetChooserBlock(Categoria, required=True)),
         # ])),
-        ('icono', core_blocks.StreamBlock([
-            ('valor', snippets_blocks.SnippetChooserBlock(Icono, required=True)),
-            ('mostrar', core_blocks.BooleanBlock(required=True, default=True)),
-        ])),
+        ('icono', IconoBlock())
     ], block_counts={
-        # 'buscador_paginas': {'max_num': 1},
+        'icono': {'max_num': 1},
     })
 
     content_panels = Page.content_panels + [
         FieldPanel('desc'),
-        # MultiFieldPanel(
-        #     [
-        #         InlinePanel('navbar_categorias', label='Categoria'),
-        #     ], heading='Categoria(s)'),
+        MultiFieldPanel(
+            [
+                InlinePanel('navbar_categorias', label='Categoria'),
+            ], heading='Categoria(s)'),
     ]
 
     promote_panels = Page.promote_panels + []
@@ -120,17 +117,7 @@ class NavBar(Page):
         verbose_name_plural = 'NavBars'
 
 
-class Footer(Page):
-    parent_page_types = ['Base']
-
-    class Meta:
-        verbose_name = 'Pie de pagina'
-        verbose_name_plural = 'Pies de pagina'
-
 """
-NavBar
-    - mostrar_titulo y override cuando hay icono
-
 SubMenu categos -> agregar mostrar submenu en config sitio
     - Categorias snippet independiente
     - configurar mostrar en submenu en api

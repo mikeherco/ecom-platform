@@ -2,13 +2,14 @@ from django.db import models
 from django.db.models import ForeignKey
 from modelcluster.fields import ParentalKey
 from wagtail import blocks as core_blocks
+from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
 from wagtail.blocks import RichTextBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.models import Orderable
-from wagtail.snippets import blocks as snippets
+from wagtail.snippets import blocks as snippets_blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
-from paginas.snippets import Icono, ClaseColor
+from paginas.snippets import Icono, ClaseColor, Categoria
 
 
 class BotonBlock(core_blocks.StructBlock):
@@ -25,11 +26,11 @@ class BotonBlock(core_blocks.StructBlock):
                                                 'wagtailuiplus__choice-handler-hidden-if--pagina '
                                                 'wagtailuiplus__choice-handler-hidden-if--ancla')
     accion_texto = core_blocks.CharBlock(max_length=30, required=False)
-    accion_clase = snippets.SnippetChooserBlock(ClaseColor, required=False)
+    accion_clase = snippets_blocks.SnippetChooserBlock(ClaseColor, required=False)
     accion_alineacion = core_blocks.ChoiceBlock(max_length=30, null=True, blank=True, default='izquierda',
                                                 choices=(('', 'Alineación'), ('izquierda', 'Izquierda'),
                                                          ('centro', 'Centro'), ('derecha', 'Derecha')))
-    icono = snippets.SnippetChooserBlock(Icono, required=False)
+    icono = snippets_blocks.SnippetChooserBlock(Icono, required=False)
     icono_posicion = core_blocks.ChoiceBlock(max_length=30, null=True, blank=True, default='izquierda',
                                              choices=(('izquierda', 'Izquierda'), ('derecha', 'Derecha')))
 
@@ -91,6 +92,13 @@ class TextoRicoBlock(core_blocks.StructBlock):
     texto = core_blocks.RichTextBlock(null=True, required=False)
 
 
+class IconoBlock(core_blocks.StreamBlock):
+    icono = core_blocks.StructBlock([
+        ('icono', snippets_blocks.SnippetChooserBlock(Icono, required=True)),
+        ('mostrar', core_blocks.BooleanBlock(required=True, default=True))
+    ])
+
+
 class FooterStreamBlock(core_blocks.StreamBlock):
     texto_columna = TextoColumnaBlock()
     link_columna = LinkBlock()
@@ -104,14 +112,15 @@ class FooterStreamBlock(core_blocks.StreamBlock):
         }
 
 
+class CategoriasOrderable(Orderable):
+    page = ParentalKey('paginas.Navbar', related_name='navbar_categorias')
+    categoria = ForeignKey(Categoria, on_delete=models.CASCADE)
+    mostrar = models.BooleanField(default=True)
 
-# class CategoriasOrderable(Orderable):
-#     page = ParentalKey('paginas.Navbar', related_name='navbar_categorias')
-#     categoria = ForeignKey(Categoria, on_delete=models.CASCADE)
-#
-#     content_panels = [
-#         SnippetChooserBlock('paginas.Categoria'),
-#     ]
-#     api_fields = [
-#         APIField('categoria'),
-#     ]
+    content_panels = [
+        SnippetChooserBlock('paginas.Categoria'),
+        FieldPanel('mostrar')
+    ]
+    api_fields = [
+        APIField('categoria'),
+    ]
