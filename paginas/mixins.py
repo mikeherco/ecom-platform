@@ -3,7 +3,7 @@ from wagtail.models import RevisionMixin, LockableMixin, WorkflowMixin, DraftSta
 from django.conf import settings
 
 
-class RevisionBaseModelMixin(LockableMixin, WorkflowMixin, DraftStateMixin, RevisionMixin):
+class RevisionBaseModelMixin(LockableMixin, WorkflowMixin, DraftStateMixin, RevisionMixin, models.Model):
     class Meta:
         abstract = True
 

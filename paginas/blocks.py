@@ -99,6 +99,21 @@ class IconoBlock(core_blocks.StreamBlock):
     ])
 
 
+'''
+agregar en el footer y en la configuracion de sitio 
+'''
+
+
+class RedesSocialesBlock(core_blocks.StructBlock):
+     icono = IconoBlock(label='Icono', required=False)
+     enlace = EnlaceBlock()
+
+     api_fields = [
+         APIField('icono'),
+         APIField('enlace'),
+     ]
+
+
 class FooterStreamBlock(core_blocks.StreamBlock):
     texto_columna = TextoColumnaBlock()
     link_columna = LinkBlock()
@@ -113,7 +128,7 @@ class FooterStreamBlock(core_blocks.StreamBlock):
 
 
 class CategoriasOrderable(Orderable):
-    page = ParentalKey('paginas.Navbar', related_name='navbar_categorias')
+    page = ParentalKey('paginas.Navbar', related_name='navbar_categorias', on_delete=models.CASCADE)
     categoria = ForeignKey(Categoria, on_delete=models.CASCADE)
     mostrar = models.BooleanField(default=True)
 
@@ -123,4 +138,5 @@ class CategoriasOrderable(Orderable):
     ]
     api_fields = [
         APIField('categoria'),
+        APIField('mostrar')
     ]

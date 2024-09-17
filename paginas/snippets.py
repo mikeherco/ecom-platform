@@ -31,7 +31,7 @@ class ClaseColor(models.Model):
 
 @register_snippet
 class Categoria(RevisionBaseModelMixin):
-    nombre = models.CharField(max_length=120, unique=True, primary_key=True, null=False, blank=False)
+    nombre = models.CharField(max_length=120, null=True, blank=True)
 
     panels = [
         FieldPanel('nombre'),

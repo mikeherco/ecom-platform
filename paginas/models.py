@@ -8,9 +8,10 @@ from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, Objec
 from paginas.blocks import CarruselHistoriaBlock, FooterStreamBlock, IconoBlock
 from wagtail import blocks as core_blocks
 from wagtail.snippets import blocks as snippets_blocks
+
 from paginas.snippets import ClaseColor, Icono
 from wagtail.images.blocks import ImageChooserBlock
-# from .snippets import Categoria
+from .snippets import Categoria
 """TODO: min_num debe ser mínimo 1 en QA y prod"""
 
 
@@ -52,6 +53,10 @@ class ConfiguracionSitio(BaseSiteSetting):
         APIField('footer'),
     ]
 
+    class Meta:
+        verbose_name = 'Configuracion Sitio'
+        verbose_name_plural = 'Configuraciones Sitios'
+
 
 class Base(Page):
     """Base es HOME"""
@@ -68,6 +73,10 @@ class Base(Page):
         FieldPanel('carrusel'),
     ]
     max_count = 1
+
+    class Meta:
+        verbose_name = 'Pagina Base'
+        verbose_name_plural = 'Paginas Base'
 
 
 class Grupo(Page):
@@ -88,10 +97,6 @@ class NavBar(Page):
     desc = StreamField([
         ('logo', ImageChooserBlock(required=True)),
         ('color', snippets_blocks.SnippetChooserBlock(ClaseColor, required=True)),
-        # ('buscador_paginas', core_blocks.StreamBlock([
-        #     ('mostrar_buscador', core_blocks.BooleanBlock(required=True, default=True)),
-        #     ('categorias', snippets_blocks.SnippetChooserBlock(Categoria, required=True)),
-        # ])),
         ('icono', IconoBlock())
     ], block_counts={
         'icono': {'max_num': 1},
