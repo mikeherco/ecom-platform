@@ -137,6 +137,10 @@ class CategoriasOrderable(Orderable):
         FieldPanel('mostrar')
     ]
     api_fields = [
-        APIField('categoria'),
-        APIField('mostrar')
+        APIField('mostrar'),
+        APIField('nombre'),
     ]
+
+    @property
+    def nombre(self):
+        return self.categoria.nombre

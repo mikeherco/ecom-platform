@@ -11,7 +11,7 @@ from wagtail.snippets import blocks as snippets_blocks
 
 from paginas.snippets import ClaseColor, Icono
 from wagtail.images.blocks import ImageChooserBlock
-from .snippets import Categoria
+
 """TODO: min_num debe ser mínimo 1 en QA y prod"""
 
 
