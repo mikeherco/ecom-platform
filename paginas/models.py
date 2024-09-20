@@ -40,7 +40,7 @@ class ConfiguracionSitio(BaseSiteSetting):
         'redes_sociales': {'min_num': 0, 'max_num': 4}
     }, null=True, blank=True, use_json_field=True)
 
-    footer = StreamField(FooterStreamBlock())
+    footer = StreamField(FooterStreamBlock(), min_num=0, max_num=4)
 
     api_fields = [
         APIField('site_id'),
