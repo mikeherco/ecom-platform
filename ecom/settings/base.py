@@ -17,10 +17,8 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -33,6 +31,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "home",
     "paginas",
+    "rest",
+
     "search",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -45,15 +45,20 @@ INSTALLED_APPS = [
     "wagtail.images",
     "wagtail.search",
     "wagtail.admin",
+    "wagtail.api.v2",
     "wagtail",
+
     "modelcluster",
     "taggit",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -68,13 +73,13 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
-ROOT_URLCONF = "ecom-platform.urls"
+ROOT_URLCONF = "ecom.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(PROJECT_DIR, "../templates"),
+            os.path.join(PROJECT_DIR, "/templates/"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -88,7 +93,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "ecom-platform.wsgi.application"
+WSGI_APPLICATION = "ecom.wsgi.application"
 
 WAGTAIL_SITE_NAME = "Prueba E-commerce"
 WAGTAILADMIN_BASE_URL = "http://localhost:8000"
@@ -98,9 +103,6 @@ WAGTAILSEARCH_BACKENDS = {
         "BACKEND": "wagtail.search.backends.database",
     }
 }
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
 # Password validation
@@ -139,12 +141,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "../static")
-STATIC_URL = "static/"
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
-
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -157,21 +153,21 @@ STATICFILES_DIRS = [
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
 # See https://docs.djangoproject.com/en/4.2/ref/contrib/staticfiles/#manifeststaticfilesstorage
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+
+STATIC_ROOT = os.path.join(PROJECT_DIR, "/static")
+STATIC_URL = "static/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 
-# Wagtail settings
-
-WAGTAIL_SITE_NAME = "ecommerce"
-
-# Search
-# https://docs.wagtail.org/en/stable/topics/search/backends.html
-WAGTAILSEARCH_BACKENDS = {
+STORAGES = {
     "default": {
-        "BACKEND": "wagtail.search.backends.database",
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
     }
 }
 
-# Base URL to use when referring to full URLs within the Wagtail admin backend -
-# e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://example.com"
+ENABLE_ADVANCED_SNIPPETS = True
