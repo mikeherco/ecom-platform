@@ -75,56 +75,52 @@ class EnlaceBlock(core_blocks.StructBlock):
         classname = 'enlace'
 
 
-class TextoColumnaBlock(core_blocks.StructBlock):
-    titulo = core_blocks.CharBlock(required=False)
-    texto = core_blocks.RichTextBlock(required=False)
-
-    # class Meta:
-    #     icon = 'text'
-    #
-
-
-class LinkBlock(core_blocks.StructBlock):
-    enlace = core_blocks.ListBlock(EnlaceBlock(), min_num=1, max_num=5)
-
-
 class TextoRicoBlock(core_blocks.StructBlock):
     texto = core_blocks.RichTextBlock(null=True, required=False)
 
 
-class IconoBlock(core_blocks.StreamBlock):
-    icono = core_blocks.StructBlock([
-        ('icono', snippets_blocks.SnippetChooserBlock(Icono, required=True)),
-        ('mostrar', core_blocks.BooleanBlock(required=True, default=True))
-    ])
-
-
-'''
-agregar en el footer y en la configuracion de sitio 
-'''
+class IconoBlock(core_blocks.StructBlock):
+    icono = snippets_blocks.SnippetChooserBlock(Icono, required=False)
+    mostrar = core_blocks.BooleanBlock(required=True, default=True)
 
 
 class RedesSocialesBlock(core_blocks.StructBlock):
-     icono = IconoBlock(label='Icono', required=False)
-     enlace = EnlaceBlock()
+    icono = IconoBlock(label='Icono')
+    enlace = EnlaceBlock()
 
-     api_fields = [
-         APIField('icono'),
-         APIField('enlace'),
-     ]
+    api_fields = [
+        APIField('icono'),
+        APIField('enlace'),
+    ]
+
+    class Meta:
+        min_num = 1
+        max_num = 5
+
+
+class ColumnaBlock(core_blocks.StructBlock):
+    titulo = core_blocks.CharBlock(max_length=120)
+    texto = TextoRicoBlock()
+    enlace = core_blocks.ListBlock(EnlaceBlock(), min_num=0, max_num=6)
 
 
 class FooterStreamBlock(core_blocks.StreamBlock):
-    texto_columna = TextoColumnaBlock()
-    link_columna = LinkBlock()
-    licencia = TextoRicoBlock()
+    columna = ColumnaBlock()
+    redes_sociales = RedesSocialesBlock()
+    licencia = core_blocks.TextBlock(required=True, null=False, blank=False, default='Licencia Footer')
 
     class Meta:
         block_counts = {
-            'texto_columna': {'min_num': 1, 'max_num': 1},
-            'link_columna': {'min_num': 1, 'max_num': 5},
+            'columna': {'min_num': 0, 'max_num': 2},
+            'redes_sociales': {'min_num': 0, 'max_num': 5},
             'licencia': {'min_num': 1, 'max_num': 1},
         }
+
+
+class PaletaColorBlock(core_blocks.StructBlock):
+    primario = snippets_blocks.SnippetChooserBlock(ClaseColor, blank=True, null=True)
+    secundario = snippets_blocks.SnippetChooserBlock(ClaseColor, blank=True, null=True)
+    acento = snippets_blocks.SnippetChooserBlock(ClaseColor, blank=True, null=True)
 
 
 class CategoriasOrderable(Orderable):

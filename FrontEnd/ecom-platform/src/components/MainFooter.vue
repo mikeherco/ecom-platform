@@ -1,19 +1,22 @@
 <template>
   <v-footer
-    class="bg-indigo-lighten-1 d-flex flex-column"
+    class="bg-indigo-lighten-1 d-flex flex-column pt-4"
   >
           <div class="d-flex">
         <div class="d-flex flex-row px-2" style="flex: 1 1 50%;">
-          <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            :icon="icon"
-            class="mx-4"
-            variant="text"
-          ></v-btn>
+          <div>
+            <p class="text-h6">Redes sociales</p>
+            <v-btn
+              v-for="icon in icons"
+              :key="icon"
+              :icon="icon"
+              class="mx-4"
+              variant="text"
+            ></v-btn>
+          </div>
         </div>
         <div style="flex: 1 1 50%;">
-          Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus.
+          Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum.
         </div>
       </div>
 
