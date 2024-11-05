@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar class="pa-1 bg-indigo-lighten-1" density="compact">
+    <v-toolbar class="pa-1" :color="data.paleta_color[0].primario" density="compact">
 <!--
       <v-toolbar-title>Title</v-toolbar-title>
 -->
@@ -11,12 +11,20 @@
       <v-btn icon>
         <v-icon>mdi-cart</v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn v-if="data.invitado_login" icon>
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-toolbar>
-  <MenuSecundario />
+  <MenuSecundario :color="data.paleta_color[0].primario"/>
 </template>
 <script setup lang="ts">
 import MenuSecundario from "@/components/MenuSecundario.vue";
+import apiBase from "@/utils/axios";
+import {onMounted, ref} from "vue";
+
+defineProps(
+  {
+    data: [Object],
+  }
+);
 </script>
