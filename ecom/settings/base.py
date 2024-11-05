@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "rest_framework",
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # wagtail
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "ecom.urls"
@@ -170,4 +172,10 @@ STORAGES = {
     }
 }
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 ENABLE_ADVANCED_SNIPPETS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
