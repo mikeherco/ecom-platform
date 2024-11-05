@@ -43,12 +43,6 @@ defineProps({
 
 const categorias = ref([]);
 
-let menu = [
-  { nombre: 'Cat1', id: 1 },
-  { nombre: 'Cat2', id: 2 },
-  { nombre: 'Cat3', categorias: [{ nombre: 'categoria1' }, { nombre: 'categoria2' }], id: 3 }
-];
-
 const getCategoria = async () => {
   try {
     const response = await apiBase.get('/categorias/');

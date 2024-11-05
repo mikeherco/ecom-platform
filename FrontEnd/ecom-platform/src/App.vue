@@ -5,7 +5,7 @@
       <Maintenance v-if="data.mantenimiento" />
       <router-view v-else />
     </v-main>
-    <main-footer />
+    <main-footer :data="data" />
   </v-app>
 </template>
 
@@ -13,12 +13,12 @@
 import NavBar from "@/components/NavBar.vue";
 import MainFooter from "@/components/MainFooter.vue";
 import apiBase from '@/utils/axios';
-import { ref } from 'vue';
+import {onBeforeMount, onMounted, ref} from 'vue';
 import Maintenance from "@/pages/Maintenance.vue";
 
 const data = ref([]);
 
-async function getData() {
+const getData= async () => {
   try {
     const response = await apiBase.get('/configuracion-sitio/');
     data.value = response.data.length > 0 ? response.data[0] : {};
@@ -28,7 +28,9 @@ async function getData() {
   }
 }
 
-getData();
+onBeforeMount(() => {
+  getData();
+});
 </script>
 <style>
 
