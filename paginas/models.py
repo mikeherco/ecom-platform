@@ -33,7 +33,7 @@ class ConfiguracionSitio(BaseSiteSetting):
         APIField('invitado_login'),
         APIField('paleta_color'),
         APIField('analytics'),
-        # APIField('redes_sociales'),
+        APIField('redes_sociales'),
         APIField('footer'),
     ]
 
