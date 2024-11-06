@@ -51,6 +51,20 @@ class PaletaColorSerializer(serializers.Serializer):
         }
 
 
+class IconoBlockSerializer(serializers.Serializer):
+    icono = IconoSerializer()
+    mostrar = serializers.BooleanField()
+
+    def to_representation(self, instance):
+        icono = None
+        if instance.get('icono'):
+            icono = IconoSerializer(instance.get('icono')).data.get('nombre')
+        return {
+            'icono': icono,
+            'mostrar': instance.get('mostrar'),
+        }
+
+
 class EnlaceBlockSerializer(serializers.Serializer):
     titulo = serializers.CharField()
     tipo = serializers.ChoiceField(choices=[('pagina', 'Página'), ('url', 'URL'), ('sin_enlace', 'Sin Enlace')])
@@ -59,7 +73,6 @@ class EnlaceBlockSerializer(serializers.Serializer):
 
     @staticmethod
     def get_pagina(obj):
-        print('get_pagina', obj)
         pagina = obj['pagina']
         if pagina:
             return {
@@ -113,31 +126,25 @@ class ColumnaBlockSerializer(serializers.Serializer):
         return representation
 
 
-class IconoBlockSerializer(serializers.Serializer):
-    icono = IconoSerializer()
-    mostrar = serializers.BooleanField()
-
-    def to_representation(self, instance):
-        return {
-            'icono': instance,
-            'mostrar': instance,
-        }
-
-
 class RedesSocialesBlockSerializer(serializers.Serializer):
-    icono = IconoBlockSerializer()
-    enlace = EnlaceBlockSerializer()
+    icono = IconoBlockSerializer(many=True)
+    enlace = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_enlace(instance):
+        enlaces = instance.value.get('enlace')
+        return EnlaceBlockSerializer(enlaces).data
 
     def to_representation(self, instance):
         return {
             'icono': IconoBlockSerializer(instance.value.get('icono')).data,
-            'enlace': EnlaceBlockSerializer(instance.value.get('enlace')).data,
+            'enlace': self.get_enlace(instance),
         }
 
 
 class FooterStreamBlockSerializer(serializers.Serializer):
     columna = serializers.ListSerializer(child=ColumnaBlockSerializer(), allow_empty=True)
-    # redes_sociales = serializers.ListSerializer(child=RedesSocialesBlockSerializer(), allow_empty=True)
+    redes_sociales = serializers.ListSerializer(child=RedesSocialesBlockSerializer(), allow_empty=True)
     licencia = serializers.CharField()
 
     def to_representation(self, instance):
@@ -147,13 +154,12 @@ class FooterStreamBlockSerializer(serializers.Serializer):
                 if 'columna' not in representation:
                     representation['columna'] = []
                 representation['columna'].append(ColumnaBlockSerializer(block).data)
-            # elif block.block_type == 'redes_sociales':
-            #     if 'redes_sociales' not in representation:
-            #         representation['redes_sociales'] = []
-            #     representation['redes_sociales'].append(RedesSocialesBlockSerializer(block).data)
+            elif block.block_type == 'redes_sociales':
+                if 'redes_sociales' not in representation:
+                    representation['redes_sociales'] = []
+                representation['redes_sociales'].append(RedesSocialesBlockSerializer(block).data)
             elif block.block_type == 'licencia':
                 representation['licencia'] = block.value
-
         return representation
 
 
