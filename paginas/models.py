@@ -24,7 +24,7 @@ class ConfiguracionSitio(BaseSiteSetting):
     paleta_color = StreamField([
         ('paleta_color', PaletaColorBlock(null=True)),
     ], blank=True, null=True, min_num=0, max_num=1)
-    footer = StreamField(FooterStreamBlock(), min_num=0, max_num=4)
+    footer = StreamField(FooterStreamBlock())
 
     api_fields = [
         APIField('site_id'),

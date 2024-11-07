@@ -1,0 +1,103 @@
+[
+{
+    "model": "paginas.icono",
+    "pk": "user",
+    "fields": {}
+},
+{
+    "model": "paginas.clasecolor",
+    "pk": "azul",
+    "fields": {}
+},
+{
+    "model": "paginas.categoria",
+    "pk": 1,
+    "fields": {
+        "latest_revision": 3,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2024-11-07T00:28:33.242Z",
+        "last_published_at": "2024-11-07T00:28:33.242Z",
+        "live_revision": 3,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "nombre": "kk"
+    }
+},
+{
+    "model": "paginas.categoria",
+    "pk": 2,
+    "fields": {
+        "latest_revision": 4,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2024-11-07T00:29:34.963Z",
+        "last_published_at": "2024-11-07T00:29:34.963Z",
+        "live_revision": 4,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "nombre": "kk2"
+    }
+},
+{
+    "model": "paginas.categoriasorderable",
+    "pk": 1,
+    "fields": {
+        "sort_order": 0,
+        "page": 5,
+        "categoria": 1,
+        "mostrar": true
+    }
+},
+{
+    "model": "paginas.categoriasorderable",
+    "pk": 2,
+    "fields": {
+        "sort_order": 1,
+        "page": 5,
+        "categoria": 2,
+        "mostrar": true
+    }
+},
+{
+    "model": "paginas.configuracionsitio",
+    "pk": 1,
+    "fields": {
+        "site": 1,
+        "mantenimiento": true,
+        "analytics": null,
+        "logo": 1,
+        "invitado_login": false,
+        "paleta_color": "[{\"id\": \"818ec83c-291c-4485-bdd6-ca0dbda51b9e\", \"type\": \"paleta_color\", \"value\": {\"acento\": \"azul\", \"primario\": \"azul\", \"secundario\": \"azul\"}}]",
+        "footer": "[{\"id\": \"7fd69dd8-98b1-429c-bc0f-2754f5dcefcd\", \"type\": \"redes_sociales\", \"value\": {\"icono\": {\"icono\": \"user\", \"mostrar\": true}, \"enlace\": {\"url\": \"\", \"tipo\": \"sin_enlace\", \"pagina\": null, \"titulo\": \"asdf\"}}}, {\"id\": \"cd18d628-57c6-4964-a34f-9c3edacf6d22\", \"type\": \"redes_sociales\", \"value\": {\"icono\": {\"icono\": \"user\", \"mostrar\": true}, \"enlace\": {\"url\": \"\", \"tipo\": \"sin_enlace\", \"pagina\": null, \"titulo\": \"asdf\"}}}, {\"id\": \"f4044c1d-a348-4c85-acef-a30465e782c6\", \"type\": \"redes_sociales\", \"value\": {\"icono\": {\"icono\": \"user\", \"mostrar\": true}, \"enlace\": {\"url\": \"\", \"tipo\": \"sin_enlace\", \"pagina\": null, \"titulo\": \"asdf\"}}}, {\"id\": \"8b4d6bc5-ddd6-4e1a-a470-111a38859749\", \"type\": \"redes_sociales\", \"value\": {\"icono\": {\"icono\": \"user\", \"mostrar\": true}, \"enlace\": {\"url\": \"http://drive.google.com\", \"tipo\": \"url\", \"pagina\": null, \"titulo\": \"asdf\"}}}, {\"id\": \"83a6ea8e-7559-4057-ac99-44fdb4cfd639\", \"type\": \"licencia\", \"value\": \"Licencia Footer\"}, {\"id\": \"c1d13dd3-f5bd-4f01-a194-3d0728382a1e\", \"type\": \"columna\", \"value\": {\"texto\": {\"texto\": \"<p data-block-key=\\\"5l1t6\\\">textito rico</p>\"}, \"enlace\": [{\"id\": \"147a866d-93b3-4418-a225-e4c04be15818\", \"type\": \"item\", \"value\": {\"url\": \"\", \"tipo\": \"sin_enlace\", \"pagina\": null, \"titulo\": \"kk\"}}], \"titulo\": \"titulo\"}}]"
+    }
+},
+{
+    "model": "paginas.base",
+    "pk": 3,
+    "fields": {
+        "carrusel": "[{\"id\": \"7079d368-253a-40f5-9791-7e3801b24e23\", \"type\": \"carrusel_item\", \"value\": [{\"id\": \"498484b8-18cf-452b-9bfc-6c95f78e281c\", \"type\": \"imagen\", \"value\": 1}]}]",
+        "body": "<p data-block-key=\"8egyz\">kk</p>"
+    }
+},
+{
+    "model": "paginas.grupo",
+    "pk": 4,
+    "fields": {}
+},
+{
+    "model": "paginas.navbar",
+    "pk": 5,
+    "fields": {
+        "desc": "[{\"id\": \"b8dd8eb5-6695-4a35-a81e-2af65d2b0aff\", \"type\": \"logo\", \"value\": 1}]"
+    }
+}
+]
