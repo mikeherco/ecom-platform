@@ -8,13 +8,14 @@
       <div class="d-flex flex-row px-2" style="flex: 1 1 50%;">
         <div>
           <p class="text-h6">Redes sociales</p>
-<!--          <v-btn-->
-<!--            v-for="icon in icons"-->
-<!--            :key="icon"-->
-<!--            :icon="icon"-->
-<!--            class="mx-4"-->
-<!--            variant="text"-->
-<!--          ></v-btn>-->
+          <v-btn
+            v-for="(social, index) in filteredRedesSociales"
+            :key="index"
+            :icon="social.icono.icono"
+            variant="text"
+            :href="social.enlace.url || null"
+          >
+          </v-btn>
         </div>
       </div>
       <div v-if="data && data.footer" style="flex: 1 1 50%;">
@@ -47,23 +48,13 @@
 </template>
 <script setup lang="ts">
 import { defineProps, computed } from 'vue';
-
-interface Social {
-  icono: {
-    icono: string;
-    mostrar: boolean;
-  };
-  enlace: {
-    url: string;
-    titulo: string;
-  };
-}
+import { RedSocial } from '@/types/FooterInterfaces';
 
 const props = defineProps({
   data: Object,
 });
 
 const filteredRedesSociales = computed(() => {
-  return props.data?.footer?.redes_sociales?.filter((social: Social) => social.icono.mostrar) || [];
+  return props.data?.footer?.redes_sociales?.filter((social: RedSocial) => social.icono.mostrar) || [];
 });
 </script>
