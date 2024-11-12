@@ -40,8 +40,6 @@ const props = defineProps<{
   categorias: Categoria[];
 }>();
 
-console.log(props.categorias, 'categorias from menu secundario');
-
 </script>
 <style scoped>
 
