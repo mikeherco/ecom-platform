@@ -20,7 +20,7 @@
       </v-btn>
     </v-toolbar>
     <MenuSecundario v-if="data && data.paleta_color && data.paleta_color.length > 0" :color="data.paleta_color[0].primario" />
-  </template>
+</template>
 <script setup lang="ts">
 import MenuSecundario from "@/components/MenuSecundario.vue";
 

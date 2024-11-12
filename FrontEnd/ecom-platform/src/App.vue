@@ -13,7 +13,7 @@
 import NavBar from "@/components/NavBar.vue";
 import MainFooter from "@/components/MainFooter.vue";
 import apiBase from '@/utils/axios';
-import {onBeforeMount, onMounted, ref} from 'vue';
+import {onBeforeMount, ref} from 'vue';
 import Maintenance from "@/pages/Maintenance.vue";
 
 const data = ref([]);
