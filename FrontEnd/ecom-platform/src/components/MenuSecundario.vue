@@ -33,11 +33,12 @@
   </div>
 </template>
 <script setup lang="ts">
+import {Categoria} from "@/types/NavBarInterfaces";
 
-const props = defineProps({
-  color: String,
-  categorias: Array
-})
+const props = defineProps<{
+  color: string;
+  categorias: Categoria[];
+}>();
 
 console.log(props.categorias, 'categorias from menu secundario');
 

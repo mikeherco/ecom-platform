@@ -46,3 +46,12 @@ export interface NavBarDetail {
     nombre: string;
   }>;
 }
+
+export interface Categoria {
+  id: number;
+  meta: {
+    type: string;
+  };
+  mostrar: boolean;
+  nombre: string;
+}
