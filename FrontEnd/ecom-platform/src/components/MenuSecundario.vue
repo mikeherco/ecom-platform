@@ -27,35 +27,19 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-list-item-title v-else>{{ item.nombre }}</v-list-item-title>
+        <v-list-item-title v-else-if="item.mostrar">{{ item.nombre }}</v-list-item-title>
       </v-list-item>
     </v-list>
   </div>
 </template>
 <script setup lang="ts">
+import {Categoria} from "@/types/NavBarInterfaces";
 
-import {onMounted, ref} from "vue";
-import apiBase from "@/utils/axios";
+const props = defineProps<{
+  color: string;
+  categorias: Categoria[];
+}>();
 
-defineProps({
-  color: String,
-})
-
-const categorias = ref([]);
-
-const getCategoria = async () => {
-  try {
-    const response = await apiBase.get('/categorias/');
-    categorias.value = response.data;
-    console.log(categorias.value);
-  } catch (error) {
-    console.error('Error al obtener datos:', error);
-  }
-}
-
-onMounted(() => {
-  getCategoria();
-});
 </script>
 <style scoped>
 

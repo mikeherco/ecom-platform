@@ -19,14 +19,24 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-toolbar>
-    <MenuSecundario v-if="data && data.paleta_color && data.paleta_color.length > 0" :color="data.paleta_color[0].primario" />
-  </template>
+    <MenuSecundario v-if="data && data.paleta_color && data.paleta_color.length > 0" :color="data.paleta_color[0].primario" :categorias="categorias"/>
+</template>
 <script setup lang="ts">
 import MenuSecundario from "@/components/MenuSecundario.vue";
+import {defineProps, watchEffect, ref} from 'vue';
 
-defineProps(
+const props = defineProps(
   {
     data: [Object],
+    dataNavbarSecundario: [Object],
   }
 );
+
+let categorias = ref([]);
+
+watchEffect(() => {
+  if (props.dataNavbarSecundario) {
+    categorias.value = props.dataNavbarSecundario.navbar_categorias;
+  }
+});
 </script>

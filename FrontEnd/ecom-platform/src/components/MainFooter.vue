@@ -4,20 +4,21 @@
     class="d-flex flex-column pt-4"
     :color="data.paleta_color[0].primario"
   >
-    <div class="d-flex" v-if="data.footer.columna.length > 0">
+    <div class="d-flex" v-if="data && data.footer && data.footer.columna && data.footer.columna.length > 0">
       <div class="d-flex flex-row px-2" style="flex: 1 1 50%;">
         <div>
           <p class="text-h6">Redes sociales</p>
           <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            :icon="icon"
-            class="mx-4"
+            v-for="(social, index) in filteredRedesSociales"
+            :key="index"
+            :icon="social.icono.icono"
             variant="text"
-          ></v-btn>
+            :href="social.enlace.url || null"
+          >
+          </v-btn>
         </div>
       </div>
-      <div style="flex: 1 1 50%;">
+      <div v-if="data && data.footer" style="flex: 1 1 50%;">
         <p class="w-100 text-h6" v-if="data.footer.columna[0].titulo">{{data.footer.columna[0].titulo}}</p>
         <p v-html="data.footer.columna[0].texto"></p>
       </div>
@@ -27,12 +28,13 @@
         <div>
           <p class="text-h6">Redes sociales</p>
           <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            :icon="icon"
-            class="mx-4"
+            v-for="(social, index) in filteredRedesSociales"
+            :key="index"
+            :icon="social.icono.icono"
             variant="text"
-          ></v-btn>
+            :href="social.enlace.url || null"
+          >
+          </v-btn>
         </div>
       </div>
     </div>
@@ -45,9 +47,14 @@
   </v-footer>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { defineProps, computed } from 'vue';
+import { RedSocial } from '@/types/FooterInterfaces';
 
-defineProps({
+const props = defineProps({
   data: Object,
+});
+
+const filteredRedesSociales = computed(() => {
+  return props.data?.footer?.redes_sociales?.filter((social: RedSocial) => social.icono.mostrar) || [];
 });
 </script>
