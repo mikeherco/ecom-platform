@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -104,6 +105,12 @@ WAGTAILSEARCH_BACKENDS = {
     "default": {
         "BACKEND": "wagtail.search.backends.database",
     }
+}
+
+DATABASE_URL = 'sqlite:///db.sqlite'
+
+DATABASES = {
+    "default": dj_database_url.config(default=DATABASE_URL)
 }
 
 

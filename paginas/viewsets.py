@@ -2,8 +2,8 @@ from rest_framework import viewsets
 from wagtail.api.v2.views import PagesAPIViewSet
 
 from paginas.models import ConfiguracionSitio
-from paginas.serializers import CategoriaSerializer, ConfiguracionSitioSerializer, IconoSerializer
-from paginas.snippets import Categoria, Icono
+from paginas.serializers import CategoriaSerializer, ConfiguracionSitioSerializer, IconoSerializer, ClaseColorSerializer
+from paginas.snippets import Categoria, Icono, ClaseColor
 
 
 class PaginasViewSet(PagesAPIViewSet):
@@ -25,8 +25,8 @@ class CategoriaViewSet(viewsets.ModelViewSet):
 
 
 class ClaseColorViewSet(viewsets.ModelViewSet):
-    serializer_class = IconoSerializer
+    serializer_class = ClaseColorSerializer
 
     def get_queryset(self):
-        return Icono.objects.all()
+        return ClaseColor.objects.all()
 

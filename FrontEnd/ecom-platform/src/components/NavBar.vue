@@ -2,7 +2,8 @@
     <v-toolbar
       v-if="data && data.paleta_color && data.paleta_color.length > 0"
       class="pa-1"
-      :color="data.paleta_color[0].primario"
+      :color="data.paleta_color[0].primario.formato === 'name' ? data.paleta_color[0].primario.valor : null"
+      :style="data.paleta_color[0].primario.formato === 'hex' ? {background: data.paleta_color[0].primario.valor} : null"
       density="compact">
 <!--
       <v-toolbar-title>Title</v-toolbar-title>

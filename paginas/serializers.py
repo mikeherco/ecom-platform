@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from wagtail.api.v2.serializers import PageSerializer
-
 from paginas.blocks import PaletaColorBlock, IconoBlock
 from paginas.models import ConfiguracionSitio
 from paginas.snippets import Categoria, ClaseColor, Icono
@@ -15,14 +14,13 @@ class CategoriaSerializer(serializers.ModelSerializer):
 class ClaseColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClaseColor
-        fields = ['nombre']
+        fields = ['color', 'nombre']
 
 
 class IconoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Icono
         fields = ['nombre']
-
 
 class TextoRicoBlockSerializer(serializers.Serializer):
     texto = serializers.CharField()
@@ -38,11 +36,20 @@ class PaletaColorSerializer(serializers.Serializer):
         secundario = None
         acento = None
         if instance.value.get('primario'):
-            primario = ClaseColorSerializer(instance.value.get('primario')).data.get('nombre')
+            primario = {
+                'formato': ClaseColorSerializer(instance.value.get('primario')).data.get('nombre'),
+                'valor': ClaseColorSerializer(instance.value.get('primario')).data.get('color')
+            }
         if instance.value.get('secundario'):
-            secundario = ClaseColorSerializer(instance.value.get('secundario')).data.get('nombre')
+            secundario = {
+                'formato': ClaseColorSerializer(instance.value.get('secundario')).data.get('nombre'),
+                'valor': ClaseColorSerializer(instance.value.get('secundario')).data.get('color')
+            }
         if instance.value.get('acento'):
-            acento = ClaseColorSerializer(instance.value.get('acento')).data.get('nombre')
+            acento = {
+                'formato': ClaseColorSerializer(instance.value.get('acento')).data.get('nombre'),
+                'valor': ClaseColorSerializer(instance.value.get('acento')).data.get('color')
+            }
 
         return {
             'primario': primario,
