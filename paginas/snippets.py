@@ -1,12 +1,11 @@
 from django.db import models
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel, FieldRowPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
 from wagtail.snippets.models import register_snippet
 from paginas.mixins import RevisionBaseModelMixin
 from django.forms import widgets
-from django.core.exceptions import ValidationError
-import re
-from colorfield.fields import ColorField
+
+from colorful.fields import RGBColorField
 
 class ColorPickerWidget(widgets.TextInput):
     input_type = 'color'
@@ -26,7 +25,7 @@ class Icono(models.Model):
 
 @register_snippet
 class ClaseColor(models.Model):
-    color = ColorField(default="#FF0000", primary_key=True)
+    color = RGBColorField(default="#FF0000", primary_key=True, help_text="Por favor seleccione un color")
 
 
     api_fields = [

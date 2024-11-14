@@ -61,7 +61,7 @@ INSTALLED_APPS = [
 
     "rest_framework",
     'corsheaders',
-    'colorfield'
+    'colorful'
 ]
 
 MIDDLEWARE = [
