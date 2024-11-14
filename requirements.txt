@@ -13,3 +13,4 @@ djangorestframework-recaptcha # ——→ investigar análogo para Cloudfare
 whitenoise
 django-session-timeout
 django-defender
+django-colorfield

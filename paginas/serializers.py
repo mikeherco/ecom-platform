@@ -14,7 +14,7 @@ class CategoriaSerializer(serializers.ModelSerializer):
 class ClaseColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClaseColor
-        fields = ['color', 'nombre']
+        fields = ['color']
 
 
 class IconoSerializer(serializers.ModelSerializer):
@@ -36,20 +36,13 @@ class PaletaColorSerializer(serializers.Serializer):
         secundario = None
         acento = None
         if instance.value.get('primario'):
-            primario = {
-                'formato': ClaseColorSerializer(instance.value.get('primario')).data.get('nombre'),
-                'valor': ClaseColorSerializer(instance.value.get('primario')).data.get('color')
-            }
+            primario =  ClaseColorSerializer(instance.value.get('primario')).data.get('color')
+
         if instance.value.get('secundario'):
-            secundario = {
-                'formato': ClaseColorSerializer(instance.value.get('secundario')).data.get('nombre'),
-                'valor': ClaseColorSerializer(instance.value.get('secundario')).data.get('color')
-            }
+            secundario = ClaseColorSerializer(instance.value.get('secundario')).data.get('color')
+
         if instance.value.get('acento'):
-            acento = {
-                'formato': ClaseColorSerializer(instance.value.get('acento')).data.get('nombre'),
-                'valor': ClaseColorSerializer(instance.value.get('acento')).data.get('color')
-            }
+            acento = ClaseColorSerializer(instance.value.get('acento')).data.get('color')
 
         return {
             'primario': primario,
