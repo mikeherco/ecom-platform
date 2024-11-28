@@ -9,7 +9,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.models import Orderable
 from wagtail.snippets import blocks as snippets_blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
-from paginas.snippets import Icono, ClaseColor, Categoria
+# from paginas.snippets import Icono, ClaseColor, Categoria
 
 
 class BotonBlock(core_blocks.StructBlock):
@@ -26,11 +26,11 @@ class BotonBlock(core_blocks.StructBlock):
                                                 'wagtailuiplus__choice-handler-hidden-if--pagina '
                                                 'wagtailuiplus__choice-handler-hidden-if--ancla')
     accion_texto = core_blocks.CharBlock(max_length=30, required=False)
-    accion_clase = snippets_blocks.SnippetChooserBlock(ClaseColor, required=False)
+    # accion_clase = snippets_blocks.SnippetChooserBlock(ClaseColor, required=False)
     accion_alineacion = core_blocks.ChoiceBlock(max_length=30, null=True, blank=True, default='izquierda',
                                                 choices=(('', 'Alineación'), ('izquierda', 'Izquierda'),
                                                          ('centro', 'Centro'), ('derecha', 'Derecha')))
-    icono = snippets_blocks.SnippetChooserBlock(Icono, required=False)
+    # icono = snippets_blocks.SnippetChooserBlock(Icono, required=False)
     icono_posicion = core_blocks.ChoiceBlock(max_length=30, null=True, blank=True, default='izquierda',
                                              choices=(('izquierda', 'Izquierda'), ('derecha', 'Derecha')))
 
@@ -80,7 +80,7 @@ class TextoRicoBlock(core_blocks.StructBlock):
 
 
 class IconoBlock(core_blocks.StructBlock):
-    icono = snippets_blocks.SnippetChooserBlock(Icono, required=False)
+    # icono = snippets_blocks.SnippetChooserBlock(Icono, required=False)
     mostrar = core_blocks.BooleanBlock(required=True, default=True)
 
 
@@ -117,26 +117,26 @@ class FooterStreamBlock(core_blocks.StreamBlock):
         }
 
 
-class PaletaColorBlock(core_blocks.StructBlock):
-    primario = snippets_blocks.SnippetChooserBlock(ClaseColor, blank=True, null=True)
-    secundario = snippets_blocks.SnippetChooserBlock(ClaseColor, blank=True, null=True)
-    acento = snippets_blocks.SnippetChooserBlock(ClaseColor, blank=True, null=True)
+# class PaletaColorBlock(core_blocks.StructBlock):
+#     primario = snippets_blocks.SnippetChooserBlock(ClaseColor, blank=True, null=True)
+#     secundario = snippets_blocks.SnippetChooserBlock(ClaseColor, blank=True, null=True)
+#     acento = snippets_blocks.SnippetChooserBlock(ClaseColor, blank=True, null=True)
 
 
-class CategoriasOrderable(Orderable):
-    page = ParentalKey('paginas.Navbar', related_name='navbar_categorias', on_delete=models.CASCADE)
-    categoria = ForeignKey(Categoria, on_delete=models.CASCADE)
-    mostrar = models.BooleanField(default=True)
-
-    content_panels = [
-        SnippetChooserBlock('paginas.Categoria'),
-        FieldPanel('mostrar')
-    ]
-    api_fields = [
-        APIField('mostrar'),
-        APIField('nombre'),
-    ]
-
-    @property
-    def nombre(self):
-        return self.categoria.nombre
+# class CategoriasOrderable(Orderable):
+#     page = ParentalKey('paginas.Navbar', related_name='navbar_categorias', on_delete=models.CASCADE)
+#     categoria = ForeignKey(Categoria, on_delete=models.CASCADE)
+#     mostrar = models.BooleanField(default=True)
+#
+#     content_panels = [
+#         SnippetChooserBlock('paginas.Categoria'),
+#         FieldPanel('mostrar')
+#     ]
+#     api_fields = [
+#         APIField('mostrar'),
+#         APIField('nombre'),
+#     ]
+#
+    # @property
+    # def nombre(self):
+    #     return self.categoria.nombre
